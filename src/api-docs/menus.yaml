@@ -1,0 +1,120 @@
+openapi: 3.0.0
+info:
+  title: API
+  description:
+  version: 0.1.9
+
+paths:
+  /menus/get:
+    get:
+      tags:
+        - Menus
+      summary: Returns A List Of Menus.
+      description: Get All Menus
+      responses:
+        "200":
+          description: SUCCESS
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Server Error
+
+  /menus/get/{MId}:
+    get:
+      tags:
+        - Menus
+      summary: Returns A Menus
+      description: Get Menus  By MId
+      parameters:
+        - name: MId
+          in: path
+          description: The MID of the Menus
+          required: true
+      responses:
+        "200":
+          description: SUCCESS
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Server Error
+
+  /menus/add:
+    post:
+      tags:
+        - Menus
+      summary: Create Menus
+      description: Add A New Menus
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                -userId
+              properties:
+                MName:
+                  type: string
+                  default: MenuName
+        responses:
+          "200":
+            description: SUCCESS
+          "400":
+            description: Bad Request
+          "404":
+            description: Not Found
+          "500":
+            description: Server Error
+
+  /menus/delete/{MId}:
+    delete:
+      tags:
+        - Menus  
+      summary: Delete A Menus
+      description: Delete Menus By MId
+      parameters:
+        - name: MId
+          in: path
+          description: The MId of the Menus
+          required: true
+      responses:
+        "200":
+          description: SUCCESS
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Server Error
+  
+  /menus/update/{MId}:
+    put:
+      tags:
+        - Menus
+      summary: Update A Menus
+      parameters:
+        - name: MId
+          in: path 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                MName:
+                  type: string
+                  default: MenuName
+        responses:
+          201:
+            description: Created
+          409:
+            description: Conflict
+          404:
+            description: Not Found
+          500:
+            description: Server Error

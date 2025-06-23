@@ -1,0 +1,337 @@
+openapi: 3.0.0
+info:
+  title: API
+  description:
+  version: 0.1.9
+
+paths:
+  /users/get:
+    get:
+      tags:
+        - User
+      summary: Returns A List Of Users.
+      description: Get All Users
+      responses:
+        "200":
+          description: SUCCESS
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Server Error
+
+  /users/get/{id}:
+    get:
+      tags:
+        - User
+      summary: Returns A User
+      description: Get Users By Id
+      parameters:
+        - name: id
+          in: path
+          description: The id of the user
+          required: true
+      responses:
+        "200":
+          description: SUCCESS
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Server Error
+
+  /users/add:
+    post:
+      tags:
+        - User
+      summary: new User
+      description: Creates a new User in the database.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  default: Nagajan
+                  description: users firstName
+                lastName:
+                  type: string
+                  default: Thapaliya
+                  description: users lastName
+                eMail:
+                  type: text
+                  default: nagajanthapaliya2004@gmail.com
+                  description: user eMail
+                password:
+                  type: text
+                  default: john@12
+                  description: user Password
+                gender:
+                  type: enum
+                  default: MALE
+                  description: User Gender
+      responses:
+        "200":
+          description: User created successfully
+        "400":
+          description: Invalid request body
+        "500":
+          description: Internal server error
+
+  /users/delete/{id}:
+    delete:
+      tags:
+        - User
+      summary: Delete A User
+      description: Delete User By Id
+      parameters:
+        - name: id
+          in: path
+          description: The id of the user
+          required: true
+      responses:
+        "200":
+          description: SUCCESS
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Server Error
+
+  /users/update/{id}:
+    put:
+      tags:
+        - User
+      summary: Update a user
+      parameters:
+        - name: id
+          in: path
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  default: johndoe
+                lastName:
+                  type: string
+                  default: johndoe
+                eMail:
+                  type: text
+                  default: johndoe12@gmail.com
+      responses:
+        201:
+          description: Created
+        409:
+          description: Conflict
+        404:
+          description: Not Found
+        500:
+          description: Server Error
+
+  /users/joinarray:
+    get:
+      tags:
+        - User
+      summary: Returns A List Of Users.
+      description: Get All Users
+      responses:
+        "200":
+          description: SUCCESS
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Server Error
+
+/users/login:
+  post:
+    tags:
+      - User
+    summary: login User
+    description: login Users By Password
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              eMail:
+                type: text
+                default: johndoe12@gmail.com
+              password:
+                type: text
+                default: john@12
+    responses:
+      "200":
+        description: SUCCESS
+      "400":
+        description: Bad Request
+      "404":
+        description: Not Found
+      "500":
+        description: Server Error
+
+/users/readdata:
+  post:
+    tags:
+      - User
+    summary: Read file
+    description: Reading the file
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              fileName:
+                type: text
+                default: D:\NodeJS\Project\src\testing.txt
+    responses:
+      "200":
+        description: SUCCESS
+      "400":
+        description: Bad Request
+      "404":
+        description: Not Found
+      "500":
+        description: Server Error
+
+/users/writedata:
+  post:
+    tags:
+      - User
+    summary: write file
+    description: writing the file
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              fileName:
+                type: text
+                default: D:\NodeJS\Project\src\testing.txt
+              text:
+                type: text
+                default: This Is A Testing..
+    responses:
+      "200":
+        description: SUCCESS
+      "400":
+        description: Bad Request
+      "404":
+        description: Not Found
+      "500":
+        description: Server Error
+
+/users/getxlsxdata:
+  post:
+    tags:
+      - User
+    summary: Read file
+    description: Reading the file
+    requestBody:
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              file:
+                type: string
+                format: binary
+    # requestBody:
+    #   required: true
+    #   content:
+    #     application/json:
+    #       schema:
+    #         type: object
+    #         properties:
+    #           fileName:
+    #             type: text
+    #             default: D:\NodeJS\Project\src\DR_ManualPunchData_Listing_2025-06-13_02-24.xlsx
+    responses:
+      "200":
+        description: SUCCESS
+      "400":
+        description: Bad Request
+      "404":
+        description: Not Found
+      "500":
+        description: Server Error
+
+/users/downloadexcel:
+  post:
+    tags:
+      - User
+    summary: download file
+    description: download & writing the file
+    requestBody:
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              file:
+                type: string
+                format: binary
+    responses:
+      "200":
+        description: Excel file downloaded
+        # content:
+        #   application/octet-stream:
+        #     schema:
+        #       type: string
+        #       format: binary
+      "400":
+        description: Bad Request
+      "404":
+        description: Not Found
+      "500":
+        description: Server Error
+
+/users/sendMail:
+  post:
+    tags:
+      - User
+    summary: Send Mail 
+    description: Send Mail To User
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              to:
+                type: text
+                default: armyr3752@gmail.com
+                description: Enter Email
+              subject:
+                type: string
+                default: Send Email To Node Js nodemailer
+                description: Enter Subject
+              text:
+                type: text
+                default: This Is Testing Email By Nagajan Thapaliya
+                description: Enter Description
+    responses:
+      "200":
+        description: Email Send Successfully
+      "400":
+        description: Invalid request body
+      "500":
+        description: Internal server error

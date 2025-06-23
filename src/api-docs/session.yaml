@@ -1,0 +1,139 @@
+openapi: 3.0.0
+info:
+  title: API
+  description:
+  version: 0.1.9
+
+paths:
+  /sessions/get:
+    get:
+      tags:
+        - Sessions
+      summary: Returns A List Of Sessions user.
+      description: Get All Sessions user
+      responses:
+        "200":
+          description: SUCCESS
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Server Error
+
+  /sessions/get/{id}:
+    get:
+      tags:
+        - Sessions
+      summary: Returns A Sessions user
+      description: Get Sessions Users By Id
+      parameters:
+        - name: id
+          in: path
+          description: The id of the user
+          required: true
+      responses:
+        "200":
+          description: SUCCESS
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Server Error
+
+  /sessions/add:
+    post:
+      tags:
+        - Sessions
+      summary: Create Sessions User
+      description: Add A New Sessions User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                -userId
+              properties:
+                userId:
+                  type: Integer
+                  default: 1
+        responses:
+          "200":
+            description: SUCCESS
+          "400":
+            description: Bad Request
+          "404":
+            description: Not Found
+          "500":
+            description: Server Error
+
+  /sessions/delete/{userId}:
+    delete:
+      tags:
+        - Sessions  
+      summary: Delete A Sessions User
+      description: Delete Sessions User By Id
+      parameters:
+        - name: userId
+          in: path
+          description: The id of the user
+          required: true
+      responses:
+        "200":
+          description: SUCCESS
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Server Error
+  
+  /sessions/update/{userId}:
+    put:
+      tags:
+        - Sessions
+      summary: Update Sessions a user
+      parameters:
+        - name: userId
+          in: path 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: Integer
+                  default: 11
+                active:
+                  type: boolean
+                  default: true
+        responses:
+          201:
+            description: Created
+          409:
+            description: Conflict
+          404:
+            description: Not Found
+          500:
+            description: Server Error
+
+  /sessions/join:
+    get:
+      tags:
+        - Sessions
+      summary: Returns A List Of Sessions Users.
+      description: Get All Sessions Users
+      responses:
+        "200":
+          description: SUCCESS
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Server Error      

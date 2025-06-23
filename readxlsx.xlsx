@@ -1,0 +1,68 @@
+//controller
+methods.readxlsx = async function (req, res, next) {
+    try {
+        const userData = await userService.readxlsx(req.body);
+
+        return handler(res, mc.SUCCESS_MSG, mc.SUCCESS_CODE, 'Read Data Successfully', userData);
+    } catch (error) {
+        console.log("Error in reading the data: ", error);
+        next(error);
+    }
+};
+//userService
+ async readxlsx(req) {
+        try {
+            return userRepository.readxlsx(req)
+
+        } catch (err) {
+            throw err;
+        }
+    }
+//userRepository
+ async readxlsx(req) {
+        const workbook = new exceljs.Workbook();
+        await workbook.xlsx.readFile(req.fileName);
+
+        const worksheet = workbook.getWorksheet(1);
+        const rows = [];
+
+        worksheet.eachRow((row, rowNumber) => {
+            if (rowNumber === 1) return;
+            const rowData = {};
+            row.eachCell((cell, colNumber) => {
+                const header = worksheet.getRow(1).getCell(colNumber).value;
+                rowData[header] = cell.value;
+            });
+            rows.push(rowData);
+        });
+
+        return rows;
+    };
+//yml
+/users/readxlsx:
+  post:
+    tags:
+      - User
+    summary: Read file
+    description: Reading the file
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              fileName:
+                type: text
+                default: D:\NodeJS\Project\src\DR_ManualPunchData_Listing_2025-06-13_02-24.xlsx
+    responses:
+      "200":
+        description: SUCCESS
+      "400":
+        description: Bad Request
+      "404":
+        description: Not Found
+      "500":
+        description: Server Error
+//route
+router.post('/readxlsx',controller.readxlsx);
